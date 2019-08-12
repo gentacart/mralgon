@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gcart.android.algonquins"
-    android:versionCode="8"
+    package="com.gcart.android.mralgon"
+    android:versionCode="1"
     android:versionName="1.0" >
     
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +26,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
         <activity
-            android:name="com.gcart.android.algonquins.MainActivity"
+            android:name="com.gcart.android.mralgon.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,133 +36,133 @@
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.RegisterScreen" >
+            android:name="com.gcart.android.mralgon.RegisterScreen" >
         </activity>
 
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.OrderEceran" >
+            android:name="com.gcart.android.mralgon.OrderEceran" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.CaraOrderScreen" >
+            android:name="com.gcart.android.mralgon.CaraOrderScreen" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ResiList" >
+            android:name="com.gcart.android.mralgon.ResiList" >
         </activity>
 
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.Province" >
+            android:name="com.gcart.android.mralgon.Province" >
         </activity>
 
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ServiceEksScreen" >
+            android:name="com.gcart.android.mralgon.ServiceEksScreen" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ResiDetail" >
+            android:name="com.gcart.android.mralgon.ResiDetail" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PromoList" >
+            android:name="com.gcart.android.mralgon.PromoList" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.HomeScreen" >
+            android:name="com.gcart.android.mralgon.HomeScreen" >
         </activity>
         
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ContactScreen" >
+            android:name="com.gcart.android.mralgon.ContactScreen" >
         </activity>
 
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.OrderScreen" >
+            android:name="com.gcart.android.mralgon.OrderScreen" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ProductList" >
+            android:name="com.gcart.android.mralgon.ProductList" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.ProductDetail" >
+            android:name="com.gcart.android.mralgon.ProductDetail" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreen" >
+            android:name="com.gcart.android.mralgon.PaymentScreen" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreenPO" >
+            android:name="com.gcart.android.mralgon.PaymentScreenPO" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreen2" >
+            android:name="com.gcart.android.mralgon.PaymentScreen2" >
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreen2Titip" >
+            android:name="com.gcart.android.mralgon.PaymentScreen2Titip" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreen3" >
+            android:name="com.gcart.android.mralgon.PaymentScreen3" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentScreen3History" >
+            android:name="com.gcart.android.mralgon.PaymentScreen3History" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNEScreen" >
+            android:name="com.gcart.android.mralgon.JNEScreen" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNEScreen2" >
+            android:name="com.gcart.android.mralgon.JNEScreen2" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNEScreen4" >
+            android:name="com.gcart.android.mralgon.JNEScreen4" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNEScreen3" >
+            android:name="com.gcart.android.mralgon.JNEScreen3" >
         </activity>
         
          
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNTScreen" >
+            android:name="com.gcart.android.mralgon.JNTScreen" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNTScreen2" >
+            android:name="com.gcart.android.mralgon.JNTScreen2" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNTScreen4" >
+            android:name="com.gcart.android.mralgon.JNTScreen4" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.JNTScreen3" >
+            android:name="com.gcart.android.mralgon.JNTScreen3" >
         </activity>
         
          
         <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentNotaScreen" >
+            android:name="com.gcart.android.mralgon.PaymentNotaScreen" >
         </activity>
          <activity
             android:label="@string/app_name"
-            android:name="com.gcart.android.algonquins.PaymentHistoryNotaScreen" >
+            android:name="com.gcart.android.mralgon.PaymentHistoryNotaScreen" >
         </activity>
     </application>
 

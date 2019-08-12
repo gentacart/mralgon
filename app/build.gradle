@@ -5,7 +5,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.gcart.android.algonquins"
+        applicationId "com.gcart.android.mralgon"
         minSdkVersion 16
         targetSdkVersion 27
     }

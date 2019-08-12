@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.gcart.android.algonquins.SquareImageView
+        <com.gcart.android.mralgon.SquareImageView
             android:id="@+id/imgProduct"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

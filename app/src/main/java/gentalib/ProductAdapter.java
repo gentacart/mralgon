@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gcart.android.algonquins.AppConfiguration;
-import com.gcart.android.algonquins.R;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
+import com.gcart.android.mralgon.AppConfiguration;
+import com.gcart.android.mralgon.R;
 import com.squareup.picasso.Picasso;
 
 
@@ -56,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.stock.setText("Stock : " + String.valueOf(product.getTotalstock()));
         holder.price.setText( AppConfiguration.formatNumber(String.valueOf(product.getPrice())) + " IDR");
 
-        Picasso.get().load("https://tokoalgonquins.com/algonquins/zip/" + product.getId() + ".jpg").into(holder.imgProduct);
+        Picasso.get().load("https://tokoalgonquins.com/mralgon/zip/" + product.getId() + ".jpg").into(holder.imgProduct);
     }
 
     @Override
