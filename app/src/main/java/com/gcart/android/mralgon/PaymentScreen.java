@@ -9,19 +9,25 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static java.lang.Boolean.TRUE;
 
 public class PaymentScreen extends Activity {
 	public String[] param = new String[20];
@@ -37,7 +43,10 @@ public class PaymentScreen extends Activity {
 		AppConfiguration.jnereg = "";
 		AppConfiguration.totalongkir = "0";
 		AppConfiguration.paket = "";
-		 LinearLayout container = (LinearLayout)findViewById(R.id.layoutId);
+		LinearLayout container = (LinearLayout)findViewById(R.id.layoutIdx);
+		LinearLayout container3 = (LinearLayout)findViewById(R.id.layoutId2);
+		TableLayout container2 = (TableLayout)findViewById(R.id.androtable);
+		container2.setStretchAllColumns(TRUE);
 		 final String[] arrorder = AppConfiguration.splitString(appConf.get("order"), '~', false);
 		 if (arrorder.length == 0) {
 			 TextView title = new TextView(this);
@@ -64,12 +73,51 @@ public class PaymentScreen extends Activity {
 			 container.addView(txtpayment);
 			 final CheckBox[] chk = new CheckBox[arrorder.length];
 			 final String[] chkstr = new String[arrorder.length];
-			 
+			 final String[] idorders = new String[arrorder.length];
 			 for(int i = 0; i < arrorder.length; i++) {
 				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
+
+				 TableRow tr = new TableRow(this);
+				 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						 LinearLayout.LayoutParams.MATCH_PARENT,
+						 LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+				 tr.setLayoutParams(params);
+
+				 Button bt = new Button(this);
+				 bt.setText("CANCEL");
+				 bt.setMaxWidth(60);
+				 tr.setGravity(Gravity.CENTER);
+				 //tr.setMinimumHeight(300);
+
+				 idorders[i] = row[11];
+				 final String _idorder = row[11];
+
+				 bt.setOnClickListener(new View.OnClickListener() {
+					 @Override
+					 public void onClick(View view) {
+						 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+						 String imei = telephonyManager.getDeviceId();
+						 param[0] = imei;
+						 param[1] = _idorder;
+						 new DoCancel(view.getContext()).execute();
+					 }
+				 });
+
+				 if(i % 2 == 0) {
+					 tr.setBackgroundColor(Color.parseColor("#dcdee2"));
+					 //ch.setBackgroundColor(Color.parseColor("#dcdee2"));
+				 }
+				 tr.setPadding(0,0,10,0);
+
+
+
 				 CheckBox ch = new CheckBox(this);
 				 ch.setText(row[1] + " " + row[6] + "\nJumlah : " + row[2] + " Warna : " + row[6] + "\nNews : "  + row[12]);
-				 container.addView(ch);
+				 ch.setTextSize(0,50);
+				 tr.addView(ch);
+				 tr.addView(bt);
+
+				 container2.addView(tr);
 				 chk[i] = ch;
 				 chkstr[i] = arrorder[i] + ";";
 			 }
@@ -85,12 +133,12 @@ public class PaymentScreen extends Activity {
 			 btnJnt.setText("Kirim J&T");
 			 Button btnLain = new Button(this);
 			 btnLain.setText("Kirim Ekspedisi Lain");
-			 container.addView(btnAmbil);
-			 container.addView(btnSubmit);
-			 container.addView(btnKirim);
+			 container3.addView(btnAmbil);
+			 container3.addView(btnSubmit);
+			 container3.addView(btnKirim);
 			 //container.addView(btnJnt);
 			 //container.addView(btnLain);
-			 container.addView(btnTitip);
+			 container3.addView(btnTitip);
 			 
 			 btnAmbil.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -278,6 +326,37 @@ public class PaymentScreen extends Activity {
 				});
 			 
 		 }
+	}
+
+	class DoCancel extends AsyncTask<Object, Void, String> {
+		Context context;
+		ProgressDialog mDialog;
+
+		DoCancel(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mDialog = new ProgressDialog(this.context);
+			mDialog.setMessage("Please wait...");
+			mDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			String ret = SendData.doCancelOrder(param);
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			mDialog.dismiss();
+			Toast.makeText(this.context, result, Toast.LENGTH_SHORT).show();
+			finish();
+		}
 	}
 
 	class DoSearchProvince extends AsyncTask<Object, Void, String> {

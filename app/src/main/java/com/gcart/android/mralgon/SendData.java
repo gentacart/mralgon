@@ -18,6 +18,26 @@ public class SendData {
 	static String rajaongkirserver = "https://pro.rajaongkir.com/api";
 	static String originkota = "2102";
 
+	public static String doCancelOrder(String [] arg) {
+		String ret = "";
+		OkHttpClient client = new OkHttpClient();
+		RequestBody formBody = new FormEncodingBuilder()
+				.add("imei", arg[0])
+				.add("idorder",arg[1])
+				.build();
+		Request request = new Request.Builder()
+				.url(controller + "cancelorderandro").post(formBody)
+				.addHeader("Accept-Encoding","identity")
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			ret = response.body().string();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
 	public static String doUpdateProduct(String offset) {
 		String ret = "";
 		RequestBody formBody = new FormEncodingBuilder()

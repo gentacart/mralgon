@@ -3,12 +3,31 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<LinearLayout 
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-		 android:id="@+id/layoutId"
+        android:id="@+id/layoutId"
         >
-      
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutIdx"
+            >
+        </LinearLayout>
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/androtable">
+
+        </TableLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutId2"
+            >
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
