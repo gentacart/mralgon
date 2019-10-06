@@ -105,6 +105,7 @@ public class ProductList extends Activity {
 				if (searchTerm.length() < 2) {
 					Toast.makeText(v.getContext(),"pencarian minimal 2 karakter",Toast.LENGTH_SHORT).show();
 				} else {
+					edtSearch.setText("");
 					searchmode = 1;
 					new DoSearchProduct(v.getContext(),searchTerm).execute();
 				}
