@@ -30,6 +30,7 @@ public class HomeScreen extends Activity {
 		appConf = new AppConfiguration(this);
 		final TextView tx = (TextView) findViewById(R.id.txtName);
 		final Button btnProduct = (Button) findViewById(R.id.btnHomeProduct);
+		final Button btnLogout = (Button) findViewById(R.id.btnHomeLogout);
 		//final Button btnProductAcc = (Button) findViewById(R.id.btnHomeProductAcc);
 		final Button btnProductPO = (Button) findViewById(R.id.btnHomeProductPO);
 		final Button btnOrder = (Button) findViewById(R.id.btnHomeOrder);
@@ -44,7 +45,7 @@ public class HomeScreen extends Activity {
 		//final Button btnCaraOrder = (Button) findViewById(R.id.btnHomeCaraOrder);
 		final Button btnContact = (Button) findViewById(R.id.btnHomeContact);
 		final Button btnResi = (Button) findViewById(R.id.btnHomeResi);
-		tx.setText("Hi " + AppConfiguration.customername + ", Selamat berbelanja");
+		tx.setText("Hi " + appConf.get("loginusername") + ", Selamat berbelanja");
 		//button click
 		btnProduct.setOnClickListener(new View.OnClickListener() {
 	         public void onClick(View v) {
@@ -52,6 +53,15 @@ public class HomeScreen extends Activity {
 	        	 AppConfiguration.categoryproduct = "0";
 	        	new DoUpdateProduct(v.getContext()).execute();
 	         }
+		});
+
+		btnLogout.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				appConf.set("loginusername", "");
+				finish();
+				Intent main = new Intent(v.getContext(),MainActivity.class);
+				startActivity(main);
+			}
 		});
 		
 		btnOngkir.setOnClickListener(new View.OnClickListener() {
@@ -357,9 +367,8 @@ public class HomeScreen extends Activity {
 	    @Override
 	    protected String doInBackground(Object... params) {
 	    	String[] arg = new String[1];
-	    	TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-	    	arg[0] = imei;
+			String username = appConf.get("loginusername");
+	    	arg[0] = username;
 	    	String ret = SendData.doRefreshOrder(arg);
 	    	return ret;
 	    }
@@ -393,9 +402,8 @@ public class HomeScreen extends Activity {
 	    @Override
 	    protected String doInBackground(Object... params) {
 	    	String[] arg = new String[1];
-	    	TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-	    	arg[0] = imei;
+			String username = appConf.get("loginusername");
+	    	arg[0] = username;
 	    	String ret = SendData.doRefreshOrderPO(arg);
 	    	return ret;
 	    }
@@ -429,9 +437,8 @@ public class HomeScreen extends Activity {
 	    @Override
 	    protected String doInBackground(Object... params) {
 	    	String[] arg = new String[1];
-	    	TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-	    	arg[0] = imei;
+			String username = appConf.get("loginusername");
+	    	arg[0] = username;
 	    	String ret = SendData.doRefreshNota(arg);
 	    	return ret;
 	    }
@@ -465,9 +472,8 @@ public class HomeScreen extends Activity {
 	    @Override
 	    protected String doInBackground(Object... params) {
 	    	String[] arg = new String[1];
-	    	TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-	    	arg[0] = imei;
+			String username = appConf.get("loginusername");
+	    	arg[0] = username;
 	    	String ret = SendData.doRefreshNotaHistory(arg);
 	    	return ret;
 	    }
@@ -502,9 +508,8 @@ public class HomeScreen extends Activity {
 	    @Override
 	    protected String doInBackground(Object... params) {
 	    	String[] arg = new String[1];
-	    	TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telephonyManager.getDeviceId();
-	    	arg[0] = imei;
+			String username = appConf.get("loginusername");
+	    	arg[0] = username;
 	    	String ret = SendData.doRefreshPaymentNota(arg);
 	    	return ret;
 	    }

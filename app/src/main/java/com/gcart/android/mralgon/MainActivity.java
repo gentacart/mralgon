@@ -20,21 +20,24 @@ public class MainActivity extends Activity {
 	public String[] param = new String[2];
 	public String imei = "";
 	public Context ct;
+	public AppConfiguration appConf;
 	public static final int REQUEST_READ_PHONE_STATE = 112;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-		if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE );
+		appConf = new AppConfiguration(getApplicationContext());
+		AppConfiguration appConf = new AppConfiguration(this);
+		if (appConf.get("loginusername").equalsIgnoreCase("")) {
+			finish();
+			Intent login = new Intent(this,LoginScreen.class);
+			startActivity(login);
 		} else {
-			//TODO
-			TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-			imei = telephonyManager.getDeviceId();
-			new CheckImei(this).execute();
+			finish();
+			Intent home = new Intent(this,HomeScreen.class);
+			startActivity(home);
 		}
-		ct = this;	     
+		ct = this;
 	}
 
 	@Override

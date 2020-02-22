@@ -95,9 +95,8 @@ public class PaymentScreen extends Activity {
 				 bt.setOnClickListener(new View.OnClickListener() {
 					 @Override
 					 public void onClick(View view) {
-						 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-						 String imei = telephonyManager.getDeviceId();
-						 param[0] = imei;
+						 String username = appConf.get("loginusername");
+						 param[0] = username;
 						 param[1] = _idorder;
 						 new DoCancel(view.getContext()).execute();
 					 }
@@ -172,10 +171,9 @@ public class PaymentScreen extends Activity {
 							String penerima = "Ambil Toko";
 							String telepon = "-";
 							String alamat = "-";
-							
-							TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-							String imei = telephonyManager.getDeviceId();
-							param[0] = imei;
+
+							String username = appConf.get("loginusername");
+							param[0] = username;
 							param[1] = "-";
 							param[2] = "-";
 							param[3] = "-";

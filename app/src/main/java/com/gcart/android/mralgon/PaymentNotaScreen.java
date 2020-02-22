@@ -88,10 +88,9 @@ public class PaymentNotaScreen extends Activity {
 				String penerima = edtPenerima.getText().toString();
 				String telepon = edtTelepon.getText().toString();
 				String alamat = edtAlamat.getText().toString();
-				
-				TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-				String imei = telephonyManager.getDeviceId();
-				param[0] = imei;
+
+				String username = appConf.get("loginusername");
+				param[0] = username;
 				param[1] = bank;
 				param[2] = rekening;
 				param[3] = jumlah;

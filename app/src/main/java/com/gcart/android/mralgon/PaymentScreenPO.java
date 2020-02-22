@@ -100,10 +100,9 @@ public class PaymentScreenPO extends Activity {
 							String penerima = "Ambil Toko";
 							String telepon = "-";
 							String alamat = "-";
-							
-							TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-							String imei = telephonyManager.getDeviceId();
-							param[0] = imei;
+
+							String username = appConf.get("loginusername");
+							param[0] = username;
 							param[1] = "-";
 							param[2] = "-";
 							param[3] = "-";

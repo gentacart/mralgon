@@ -81,9 +81,8 @@ public class OrderEceran extends Activity {
 					if (!_qty.equalsIgnoreCase("0"))
 						arrcolor = arrcolor  + qtycolor[i] + ";" + colorname[i] + ";" + _qty + ";" + _news + "~";
 				}
-				TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-        		String imei = telephonyManager.getDeviceId();
-				param[0] = imei;
+				String username = appConf.get("loginusername");
+				param[0] = username;
 				param[1] = AppConfiguration.product.getId();
 				param[2] = arrcolor;
 				new DoOrder(v.getContext()).execute();

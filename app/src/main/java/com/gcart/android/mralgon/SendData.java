@@ -11,7 +11,7 @@ public class SendData {
 	static String webfolder = "mralgon";
 	static String server = "https://tokoalgonquins.com/" + webfolder;
 	static String server2= "http://tokoalgonquins.com/" + webfolder;
-	static String controller = server + "/index.php/servicehttps/";
+	static String controller = server + "/index.php/servicehttps2/";
 	static String controllerweb = server + "/index.php/web/";
 	static String folderimage = server + "/product/";
 	static String rajaongkirapi = "f12c4a775295a1f6ae86fea58b1a8fd8";
@@ -22,7 +22,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.add("idorder",arg[1])
 				.build();
 		Request request = new Request.Builder()
@@ -198,7 +198,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.add("idproduct",arg[1])
 				.add("qty",arg[2])
 				.add("news",arg[3])
@@ -223,7 +223,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.add("idproduct",arg[1])
 				.add("color",arg[2])
 				.build();
@@ -245,7 +245,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.build();
 		Request request = new Request.Builder()
 				.url(controller + "refreshorderandrov2").post(formBody)
@@ -264,7 +264,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.build();
 		Request request = new Request.Builder()
 				.url(controller + "refreshorderandropo").post(formBody)
@@ -284,7 +284,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.build();
 		Request request = new Request.Builder()
 				.url(controller + "refreshpaymentandro").post(formBody)
@@ -303,7 +303,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.build();
 		Request request = new Request.Builder()
 				.url(controller + "refreshnotaandro").post(formBody)
@@ -322,7 +322,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.build();
 		Request request = new Request.Builder()
 				.url(controller + "refreshnotaandrohistory").post(formBody)
@@ -392,7 +392,50 @@ public class SendData {
 		return ret;
 	}
 
+	public static String doLogin(String [] arg) {
+		String ret = "";
+		RequestBody formBody = new FormEncodingBuilder()
+				.add("username", arg[0])
+				.add("password", arg[1])
+				.build();
+		Request request = new Request.Builder()
+				.url(controller + "login").post(formBody)
+				.addHeader("Accept-Encoding","identity")
+				.build();
+		OkHttpClient client = new OkHttpClient();
+		try {
+			Response response = client.newCall(request).execute();
+			ret = response.body().string();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
+	public static String doRegister(String [] arg) {
+		String ret = "";
+		OkHttpClient client = new OkHttpClient();
+		RequestBody formBody = new FormEncodingBuilder()
+				.add("username", arg[0])
+				.add("phone", arg[1])
+				.add("address",arg[3])
+				.add("email",arg[4])
+				.add("password",arg[4])
+				.build();
+		Request request = new Request.Builder()
+				.url(controller + "register").post(formBody)
+				.addHeader("Accept-Encoding","identity")
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			ret = response.body().string();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+
+
+	}
 
 	public static String doRegisterIMEI(String [] arg) {
 		String ret = "";
@@ -441,7 +484,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.add("bank", arg[1])
 				.add("account", arg[2])
 				.add("amount",arg[3])
@@ -471,7 +514,7 @@ public class SendData {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
 		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
+				.add("username", arg[0])
 				.add("bank", arg[1])
 				.add("account",arg[2])
 				.add("amount",arg[3])

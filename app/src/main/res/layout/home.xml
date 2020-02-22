@@ -119,6 +119,17 @@
              android:minWidth="150dp"
              android:text="Hubungi Kami" />
 
+        <Button
+            android:id="@+id/btnHomeLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnHomeContact"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:minWidth="250dp"
+            android:text="Logout" />
+
+
     </RelativeLayout>
 </ScrollView>
 

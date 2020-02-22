@@ -95,10 +95,9 @@ public class PaymentScreen2Titip extends Activity {
 				String penerima = edtPenerima.getText().toString();
 				String telepon = edtTelepon.getText().toString();
 				String alamat = edtAlamat.getText().toString();
-				
-				TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-				String imei = telephonyManager.getDeviceId();
-				param[0] = imei;
+
+				String username = appConf.get("loginusername");
+				param[0] = username;
 				param[1] = "";
 				param[2] = "";
 				param[3] = "";
