@@ -10,7 +10,7 @@ public class SendData {
 	//change this webfolder only
 	static String webfolder = "mralgon";
 	static String server = "https://tokoalgonquins.com/" + webfolder;
-	static String server2= "http://tokoalgonquins.com/" + webfolder;
+	static String server2= "https://tokoalgonquins.com/" + webfolder;
 	static String controller = server + "/index.php/servicehttps2/";
 	static String controllerweb = server + "/index.php/web/";
 	static String folderimage = server + "/product/";
