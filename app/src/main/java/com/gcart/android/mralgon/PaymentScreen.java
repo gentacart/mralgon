@@ -35,7 +35,7 @@ public class PaymentScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.kirim1);
+		setContentView(R.layout.kirim2);
 		appConf = new AppConfiguration(getApplicationContext());
 		AppConfiguration.tariff = 0;
 		AppConfiguration.jneKecamatan = "";
@@ -75,6 +75,50 @@ public class PaymentScreen extends Activity {
 			 final String[] chkstr = new String[arrorder.length];
 			 final String[] idorders = new String[arrorder.length];
 			 for(int i = 0; i < arrorder.length; i++) {
+				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
+				 TableRow tr = new TableRow(this);
+				 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						 LinearLayout.LayoutParams.MATCH_PARENT,
+						 LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+				 tr.setLayoutParams(params);
+
+				 Button bt = new Button(this);
+				 bt.setText("CANCEL");
+				 bt.setMaxWidth(20);
+				 tr.setGravity(Gravity.CENTER);
+				 tr.setMinimumHeight(300);
+
+
+				 idorders[i] = row[11];
+				 final String _idorder = row[11];
+				 CheckBox ch = new CheckBox(this);
+				 ch.setText(row[1] + " " + row[6] + "\nJumlah : " + row[2] + " Warna : " + row[6] + "\nNews : "  + row[12]);
+				 ch.setWidth(240);
+
+				 bt.setOnClickListener(new View.OnClickListener() {
+					 @Override
+					 public void onClick(View view) {
+						 String username = appConf.get("loginusername");
+						 param[0] = username;
+						 param[1] = _idorder;
+						 new DoCancel(view.getContext()).execute();
+					 }
+				 });
+
+				 if(i % 2 == 0) {
+					 tr.setBackgroundColor(Color.parseColor("#dcdee2"));
+					 //ch.setBackgroundColor(Color.parseColor("#dcdee2"));
+				 }
+				 tr.setPadding(0,0,10,0);
+				 tr.addView(ch);
+				 tr.addView(bt);
+
+
+				 container2.addView(tr);
+				 chk[i] = ch;
+				 chkstr[i] = arrorder[i] + ";";
+			 }
+			/* for(int i = 0; i < arrorder.length; i++) {
 				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
 
 				 TableRow tr = new TableRow(this);
@@ -119,7 +163,7 @@ public class PaymentScreen extends Activity {
 				 container2.addView(tr);
 				 chk[i] = ch;
 				 chkstr[i] = arrorder[i] + ";";
-			 }
+			 }*/
 			 Button btnSubmit = new Button(this);
 			 btnSubmit.setText("Ekspedisi Lain");
 			 Button btnKirim = new Button(this);

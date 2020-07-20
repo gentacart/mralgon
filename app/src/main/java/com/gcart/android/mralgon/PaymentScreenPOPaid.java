@@ -1,28 +1,19 @@
 package com.gcart.android.mralgon;
 
-import com.gcart.android.mralgon.R;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static java.lang.Boolean.TRUE;
-
-public class PaymentScreenPO extends Activity {
+public class PaymentScreenPOPaid extends Activity {
 	public String[] param = new String[20];
 	public AppConfiguration appConf;
 	@Override
@@ -31,10 +22,7 @@ public class PaymentScreenPO extends Activity {
 		setContentView(R.layout.kirim1);
 		appConf = new AppConfiguration(getApplicationContext());
 		AppConfiguration.tariff = 0;
-		LinearLayout container = (LinearLayout)findViewById(R.id.layoutIdx);
-		LinearLayout container3 = (LinearLayout)findViewById(R.id.layoutId2);
-		TableLayout container2 = (TableLayout)findViewById(R.id.androtable);
-		container2.setStretchAllColumns(TRUE);
+		 LinearLayout container = (LinearLayout)findViewById(R.id.layoutId);
 		 final String[] arrorder = AppConfiguration.splitString(appConf.get("order"), '~', false);
 		 if (arrorder.length == 0) {
 			 TextView title = new TextView(this);
@@ -60,59 +48,15 @@ public class PaymentScreenPO extends Activity {
 			 container.addView(txtpayment);
 			 final CheckBox[] chk = new CheckBox[arrorder.length];
 			 final String[] chkstr = new String[arrorder.length];
-			 final String[] idorders = new String[arrorder.length];
+			 
 			 for(int i = 0; i < arrorder.length; i++) {
-				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
-				 TableRow tr = new TableRow(this);
-				 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-						 LinearLayout.LayoutParams.MATCH_PARENT,
-						 LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-				 tr.setLayoutParams(params);
-
-				 Button bt = new Button(this);
-				 bt.setText("CANCEL");
-				 bt.setMaxWidth(20);
-				 tr.setGravity(Gravity.CENTER);
-				 tr.setMinimumHeight(300);
-
-
-				 idorders[i] = row[11];
-				 final String _idorder = row[11];
-				 CheckBox ch = new CheckBox(this);
-				 ch.setText(row[1] + " " + row[6] + "\nJumlah : " + row[2] + " Warna : " + row[6] + "\nNews : "  + row[12]);
-				 ch.setWidth(240);
-
-				 bt.setOnClickListener(new View.OnClickListener() {
-					 @Override
-					 public void onClick(View view) {
-						 String username = appConf.get("loginusername");
-						 param[0] = username;
-						 param[1] = _idorder;
-						 new DoCancel(view.getContext()).execute();
-					 }
-				 });
-
-				 if(i % 2 == 0) {
-					 tr.setBackgroundColor(Color.parseColor("#dcdee2"));
-					 //ch.setBackgroundColor(Color.parseColor("#dcdee2"));
-				 }
-				 tr.setPadding(0,0,10,0);
-				 tr.addView(ch);
-				 tr.addView(bt);
-
-
-				 container2.addView(tr);
-				 chk[i] = ch;
-				 chkstr[i] = arrorder[i] + ";";
-			 }
-			/* for(int i = 0; i < arrorder.length; i++) {
 				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
 				 CheckBox ch = new CheckBox(this);
 				 ch.setText(row[1] + " " + row[6] + "\nJumlah : " + row[2] + " Warna : " + row[6] + "\nNews : "  + row[12]);
 				 container.addView(ch);
 				 chk[i] = ch;
 				 chkstr[i] = arrorder[i] + ";";
-			 }*/
+			 }
 			 Button btnSubmit = new Button(this);
 			 btnSubmit.setText("Ekspedisi Lain");
 			 Button btnKirim = new Button(this);
@@ -240,39 +184,7 @@ public class PaymentScreenPO extends Activity {
 			 
 		 }
 	}
-
-	class DoCancel extends AsyncTask<Object, Void, String> {
-		Context context;
-		ProgressDialog mDialog;
-
-		DoCancel(Context context) {
-			this.context = context;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			mDialog = new ProgressDialog(this.context);
-			mDialog.setMessage("Please wait...");
-			mDialog.show();
-		}
-
-		@Override
-		protected String doInBackground(Object... params) {
-			String ret = SendData.doCancelOrder(param);
-			return ret;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			mDialog.dismiss();
-			Toast.makeText(this.context, result, Toast.LENGTH_SHORT).show();
-			finish();
-		}
-	}
-
-
+	
 	class DoPayment extends AsyncTask<Object, Void, String> {
 	    Context context;
 	    ProgressDialog mDialog;

@@ -33,8 +33,10 @@ public class HomeScreen extends Activity {
 		final Button btnLogout = (Button) findViewById(R.id.btnHomeLogout);
 		//final Button btnProductAcc = (Button) findViewById(R.id.btnHomeProductAcc);
 		final Button btnProductPO = (Button) findViewById(R.id.btnHomeProductPO);
+		final Button btnOrderPaid = (Button) findViewById(R.id.btnHomeOrderPaid);
 		final Button btnOrder = (Button) findViewById(R.id.btnHomeOrder);
 		final Button btnOrderPO = (Button) findViewById(R.id.btnHomeOrderPO);
+		//final Button btnOrderPOPaid = (Button) findViewById(R.id.btnHomeOrderPO);
 		final Button btnOngkir = (Button) findViewById(R.id.btnOngkir);
 		final Button btnNota = (Button) findViewById(R.id.btnHomeNota);
 		final Button btnNotaHistory = (Button) findViewById(R.id.btnHomeNotaHistory);
@@ -86,7 +88,15 @@ public class HomeScreen extends Activity {
 				 new DoUpdateProduct(v.getContext()).execute();
 	         }
 		});
-		
+
+
+		btnOrderPaid.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				AppConfiguration.cekongkir = 0;
+				new DoRefreshOrderPaid(v.getContext()).execute();
+			}
+		});
+
 		btnOrder.setOnClickListener(new View.OnClickListener() {
 	         public void onClick(View v) {
 	        	 AppConfiguration.cekongkir = 0;
@@ -100,6 +110,7 @@ public class HomeScreen extends Activity {
 	        	 new DoRefreshOrderPO(v.getContext()).execute();
 	         }
 		});
+		
 		/*
 		btnPromo.setOnClickListener(new View.OnClickListener() {
 	         public void onClick(View v) {
@@ -346,6 +357,41 @@ public class HomeScreen extends Activity {
        	 	startActivity(contactScreen);
 	    }
 	}
+
+	class DoRefreshOrderPaid extends AsyncTask<Object, Void, String> {
+		Context context;
+		ProgressDialog mDialog;
+
+		DoRefreshOrderPaid(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mDialog = new ProgressDialog(this.context);
+			mDialog.setMessage("download your order...");
+			mDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			String[] arg = new String[1];
+			String username = appConf.get("loginusername");
+			arg[0] = username;
+			String ret = SendData.doRefreshOrderPaid(arg);
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			appConf.set("order", result);
+			mDialog.dismiss();
+			Intent orderScreen = new Intent(context,PaymentScreenPaid.class);
+			startActivity(orderScreen);
+		}
+	}
 	
 
 	class DoRefreshOrder extends AsyncTask<Object, Void, String> {
@@ -416,8 +462,43 @@ public class HomeScreen extends Activity {
 	        Intent orderScreen = new Intent(context,PaymentScreenPO.class);
        	 	startActivity(orderScreen);
 	    }
-	} 
-	
+	}
+
+	class DoRefreshOrderPOPaid extends AsyncTask<Object, Void, String> {
+		Context context;
+		ProgressDialog mDialog;
+
+		DoRefreshOrderPOPaid(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mDialog = new ProgressDialog(this.context);
+			mDialog.setMessage("download your order...");
+			mDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			String[] arg = new String[1];
+			String username = appConf.get("loginusername");
+			arg[0] = username;
+			String ret = SendData.doRefreshOrderPO(arg);
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			appConf.set("order", result);
+			mDialog.dismiss();
+			Intent orderScreen = new Intent(context,PaymentScreenPOPaid.class);
+			startActivity(orderScreen);
+		}
+	}
+
 	class DoRefreshNota extends AsyncTask<Object, Void, String> {
 	    Context context;
 	    ProgressDialog mDialog;

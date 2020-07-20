@@ -48,16 +48,28 @@
              android:layout_marginTop="20dp"
              android:minWidth="150dp"
              android:text="Order Ready" />
+
+        <Button
+            android:id="@+id/btnHomeOrderPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnHomeOrder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:minWidth="150dp"
+            android:text="History Order" />
          
           <Button
              android:id="@+id/btnHomeOrderPO"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/btnHomeOrder"
+             android:layout_below="@+id/btnHomeOrderPaid"
              android:layout_centerHorizontal="true"
              android:layout_marginTop="20dp"
              android:minWidth="150dp"
              android:text="Order PO" />
+
+
          
           <Button
              android:id="@+id/btnHomeNota"

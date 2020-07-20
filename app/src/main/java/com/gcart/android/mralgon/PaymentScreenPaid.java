@@ -1,7 +1,5 @@
 package com.gcart.android.mralgon;
 
-import com.gcart.android.mralgon.R;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +18,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static java.lang.Boolean.TRUE;
 
-public class PaymentScreenPO extends Activity {
+public class PaymentScreenPaid extends Activity {
 	public String[] param = new String[20];
 	public AppConfiguration appConf;
 	@Override
@@ -31,6 +36,11 @@ public class PaymentScreenPO extends Activity {
 		setContentView(R.layout.kirim1);
 		appConf = new AppConfiguration(getApplicationContext());
 		AppConfiguration.tariff = 0;
+		AppConfiguration.jneKecamatan = "";
+		AppConfiguration.jneKota = "";
+		AppConfiguration.jnereg = "";
+		AppConfiguration.totalongkir = "0";
+		AppConfiguration.paket = "";
 		LinearLayout container = (LinearLayout)findViewById(R.id.layoutIdx);
 		LinearLayout container3 = (LinearLayout)findViewById(R.id.layoutId2);
 		TableLayout container2 = (TableLayout)findViewById(R.id.androtable);
@@ -56,6 +66,7 @@ public class PaymentScreenPO extends Activity {
 			 txtqty.setText("Total Barang: " + totalqty);
 			 TextView txtpayment = new TextView(this);
 			 txtpayment.setText("Total Harga : " + totalpayment);
+			 container.addView(info);
 			 container.addView(txtqty);
 			 container.addView(txtpayment);
 			 final CheckBox[] chk = new CheckBox[arrorder.length];
@@ -98,28 +109,31 @@ public class PaymentScreenPO extends Activity {
 				 }
 				 tr.setPadding(0,0,10,0);
 				 tr.addView(ch);
-				 tr.addView(bt);
+				// tr.addView(bt);
 
 
 				 container2.addView(tr);
 				 chk[i] = ch;
 				 chkstr[i] = arrorder[i] + ";";
 			 }
-			/* for(int i = 0; i < arrorder.length; i++) {
-				 String[] row = AppConfiguration.splitString(arrorder[i], ';', false);
-				 CheckBox ch = new CheckBox(this);
-				 ch.setText(row[1] + " " + row[6] + "\nJumlah : " + row[2] + " Warna : " + row[6] + "\nNews : "  + row[12]);
-				 container.addView(ch);
-				 chk[i] = ch;
-				 chkstr[i] = arrorder[i] + ";";
-			 }*/
 			 Button btnSubmit = new Button(this);
 			 btnSubmit.setText("Ekspedisi Lain");
 			 Button btnKirim = new Button(this);
-			 btnKirim.setText("Kirim JNE");
+			 btnKirim.setText("Kirim JNE / JNT / POS");
 			 Button btnAmbil = new Button(this);
 			 btnAmbil.setText("Ambil Toko");
-
+			 Button btnTitip = new Button(this);
+			 btnTitip.setText("Titip Toko");
+			 Button btnJnt = new Button(this);
+			 btnJnt.setText("Kirim J&T");
+			 Button btnLain = new Button(this);
+			 btnLain.setText("Kirim Ekspedisi Lain");
+			// container3.addView(btnAmbil);
+			// container3.addView(btnSubmit);
+			// container3.addView(btnKirim);
+			 //container.addView(btnJnt);
+			 //container.addView(btnLain);
+			// container3.addView(btnTitip);
 			 
 			 btnAmbil.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -171,6 +185,8 @@ public class PaymentScreenPO extends Activity {
 						}
 					}
 				});
+
+
 			 
 			 btnSubmit.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -205,6 +221,39 @@ public class PaymentScreenPO extends Activity {
 				}
 			});
 			 
+			 btnTitip.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						String ret = "";
+						String ret2 = "";
+						int totalqty = 0;
+					 	double totalpayment = 0;
+					 	double totalweight = 0;
+						for(int i = 0; i < arrorder.length; i++) {
+							if(chk[i].isChecked()) {
+								String[] _rw = AppConfiguration.splitString(chkstr[i], ';', false);
+								ret += chkstr[i] + "~";
+								ret2 += _rw[11] + ",";
+								totalqty += Integer.parseInt(_rw[2]);
+								totalpayment += Double.parseDouble(_rw[4]);
+								totalweight += Double.parseDouble(_rw[9]);
+							}
+							AppConfiguration.totalbarang = totalqty;
+							AppConfiguration.totalpayment = totalpayment;
+							AppConfiguration.totalweight = totalweight;
+						}
+						if(ret.equalsIgnoreCase("")) {
+							Toast.makeText(v.getContext(), "Pilih Order anda", Toast.LENGTH_SHORT).show();
+						} else {
+							appConf.set("confirmorder",ret2);
+							appConf.set("confirmorderdetail", ret);
+							finish();
+							Intent pscreen = new Intent(v.getContext(),PaymentScreen2Titip.class);
+							startActivity(pscreen);
+						}
+					}
+				});
+			 
 			 btnKirim.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -232,7 +281,39 @@ public class PaymentScreenPO extends Activity {
 							appConf.set("confirmorder",ret2);
 							appConf.set("confirmorderdetail", ret);
 							finish();
-							Intent pscreen = new Intent(v.getContext(),JNEScreen.class);
+							new DoSearchProvince(v.getContext()).execute();
+						}
+					}
+				});
+			 
+			 btnJnt.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						String ret = "";
+						String ret2 = "";
+						int totalqty = 0;
+					 	double totalpayment = 0;
+					 	double totalweight = 0;
+						for(int i = 0; i < arrorder.length; i++) {
+							if(chk[i].isChecked()) {
+								String[] _rw = AppConfiguration.splitString(chkstr[i], ';', false);
+								ret += chkstr[i] + "~";
+								ret2 += _rw[11] + ",";
+								totalqty += Integer.parseInt(_rw[2]);
+								totalpayment += Double.parseDouble(_rw[4]);
+								totalweight += Double.parseDouble(_rw[9]);
+							}
+							AppConfiguration.totalbarang = totalqty;
+							AppConfiguration.totalpayment = totalpayment;
+							AppConfiguration.totalweight = totalweight;
+						}
+						if(ret.equalsIgnoreCase("")) {
+							Toast.makeText(v.getContext(), "Pilih Order anda", Toast.LENGTH_SHORT).show();
+						} else { 
+							appConf.set("confirmorder",ret2);
+							appConf.set("confirmorderdetail", ret);
+							finish();
+							Intent pscreen = new Intent(v.getContext(),JNTScreen.class);
 							startActivity(pscreen);
 						}
 					}
@@ -272,7 +353,61 @@ public class PaymentScreenPO extends Activity {
 		}
 	}
 
+	class DoSearchProvince extends AsyncTask<Object, Void, String> {
+		Context context;
+		ProgressDialog mDialog;
 
+		DoSearchProvince(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mDialog = new ProgressDialog(this.context);
+			mDialog.setMessage("please wait...");
+			mDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(Object... params) {
+			OkHttpClient client = new OkHttpClient();
+			Request request = new Request.Builder()
+					.url("https://api.rajaongkir.com/starter/province")
+					.get()
+					.addHeader("key", SendData.rajaongkirapi)
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				return response.body().string();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			AppConfiguration appConf = new AppConfiguration(context);
+			mDialog.dismiss();
+			Log.d("province",result);
+			try {
+				JSONObject jo = new JSONObject(result);
+				JSONObject jo2 = new JSONObject(jo.getString("rajaongkir"));
+				AppConfiguration.province = AppConfiguration.parseJSON(jo2.getString("results"));
+			} catch (JSONException e){
+				Log.d("jsonerror",e.toString());
+			}
+
+			//appConf.set("product", result);
+			//AppConfiguration.listproduct = result;
+			finish();
+			Intent productList = new Intent(context,Province.class);
+			startActivity(productList);
+		}
+	}
+	
 	class DoPayment extends AsyncTask<Object, Void, String> {
 	    Context context;
 	    ProgressDialog mDialog;

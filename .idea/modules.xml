@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop-mralgon.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop-mralgon.iml" group="mralgon" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mralgon.iml" filepath="$PROJECT_DIR$/mralgon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mralgon-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mralgon-app.iml" group="mralgon/app" />
     </modules>
   </component>
 </project>

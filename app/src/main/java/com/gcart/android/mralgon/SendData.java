@@ -241,6 +241,46 @@ public class SendData {
 
 	}
 
+
+	public static String doRefreshOrderPaid(String [] arg) {
+		String ret = "";
+		OkHttpClient client = new OkHttpClient();
+		RequestBody formBody = new FormEncodingBuilder()
+				.add("username", arg[0])
+				.build();
+		Request request = new Request.Builder()
+				.url(controller + "refreshorderandropaid").post(formBody)
+				.addHeader("Accept-Encoding","identity")
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			ret = response.body().string();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	public static String doRefreshOrderPOPaid(String [] arg) {
+		String ret = "";
+		OkHttpClient client = new OkHttpClient();
+		RequestBody formBody = new FormEncodingBuilder()
+				.add("username", arg[0])
+				.build();
+		Request request = new Request.Builder()
+				.url(controller + "refreshorderandropopaid").post(formBody)
+				.addHeader("Accept-Encoding","identity")
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			ret = response.body().string();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+
 	public static String doRefreshOrder(String [] arg) {
 		String ret = "";
 		OkHttpClient client = new OkHttpClient();
