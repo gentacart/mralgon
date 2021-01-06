@@ -97,24 +97,6 @@ public class SendData {
 		return ret;
 	}
 
-	public static String doCheckIMEI(String [] arg) {
-		String ret = "";
-		RequestBody formBody = new FormEncodingBuilder()
-				.add("imei", arg[0])
-				.build();
-		Request request = new Request.Builder()
-				.url(controller + "checkimei2").post(formBody)
-				.addHeader("Accept-Encoding","identity")
-				.build();
-		OkHttpClient client = new OkHttpClient();
-		try {
-			Response response = client.newCall(request).execute();
-			ret = response.body().string();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
 
 	public static String doUpdateResi() {
 		String ret = "";
